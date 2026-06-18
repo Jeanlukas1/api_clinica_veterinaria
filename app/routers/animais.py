@@ -131,7 +131,7 @@ async def atualizar_animal(
 
 @router.delete(
     "/{animal_id}",
-    status_code=status.HTTP_204_NO_CONTENT,
+    status_code=status.HTTP_200_OK,
     summary="Inativar animal",
     description="Soft delete: define ativo=false. Gera auditoria.",
 )
@@ -139,8 +139,9 @@ async def inativar_animal(
     animal_id: uuid.UUID,
     service: AnimalService = Depends(_service),
     current_user: Usuario = Depends(require_perfil(PerfilUsuario.ADMIN)),
-) -> None:
+) -> dict:
     await service.inativar(animal_id, usuario=current_user.email)
+    return {"message": "Animal inativado com sucesso."}
 
 
 @router.get(

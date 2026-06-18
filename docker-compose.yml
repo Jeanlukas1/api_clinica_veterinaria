@@ -9,11 +9,11 @@ services:
       target: runtime
     container_name: clinica_api
     ports:
-      - "8000:8000"
+      - "8001:8000"
     environment:
-      DATABASE_URL: postgresql+asyncpg://clinica_user:clinica_pass@db:5432/clinica_veterinaria
-      DATABASE_URL_SYNC: postgresql+psycopg2://clinica_user:clinica_pass@db:5432/clinica_veterinaria
-      SECRET_KEY: ${SECRET_KEY:-super_secret_key_minimo_32_chars_aqui}
+      DATABASE_URL: postgresql+asyncpg://postgres:1907050603@localhost:5432/clinica_veterinaria
+      DATABASE_URL_SYNC: postgresql+psycopg2://postgres:1907050603@localhost:5432/clinica_veterinaria
+      SECRET_KEY: ${SECRET_KEY:-6W+.Zil}D_RIBNx<kjvg:$Qd5tS_M:ySD6:$E#yYkGu0u^{&i5tFwMn|5DX}
       DEBUG: ${DEBUG:-false}
       ENVIRONMENT: ${ENVIRONMENT:-production}
       FIRST_SUPERUSER_EMAIL: ${FIRST_SUPERUSER_EMAIL:-admin@clinica.com}
@@ -37,8 +37,8 @@ services:
     image: postgres:16-alpine
     container_name: clinica_db
     environment:
-      POSTGRES_USER: clinica_user
-      POSTGRES_PASSWORD: clinica_pass
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1907050603
       POSTGRES_DB: clinica_veterinaria
     ports:
       - "5432:5432"

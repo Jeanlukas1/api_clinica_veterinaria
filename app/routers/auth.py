@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import uuid
 
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, Response, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -139,7 +139,7 @@ async def atualizar_perfil(
 
 @router.post(
     "/me/change-password",
-    status_code=status.HTTP_204_NO_CONTENT,
+    status_code=status.HTTP_200_OK,
     summary="Alterar senha",
     description="Altera a senha do usuário autenticado após verificar a senha atual.",
 )
@@ -147,10 +147,11 @@ async def alterar_senha(
     data: AlterarSenhaRequest,
     service: AuthService = Depends(_service),
     current_user: Usuario = Depends(get_current_user),
-) -> None:
+) -> dict:
     await service.alterar_senha(
         current_user.id, data, usuario_autenticado=current_user.email
     )
+    return {"message": "Senha alterada com sucesso."}
 
 
 @router.get(
