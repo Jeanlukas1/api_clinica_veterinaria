@@ -1,0 +1,80 @@
+version: "3.9"
+
+services:
+  # ── API FastAPI ──────────────────────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    container_name: clinica_api
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql+asyncpg://clinica_user:clinica_pass@db:5432/clinica_veterinaria
+      DATABASE_URL_SYNC: postgresql+psycopg2://clinica_user:clinica_pass@db:5432/clinica_veterinaria
+      SECRET_KEY: ${SECRET_KEY:-super_secret_key_minimo_32_chars_aqui}
+      DEBUG: ${DEBUG:-false}
+      ENVIRONMENT: ${ENVIRONMENT:-production}
+      FIRST_SUPERUSER_EMAIL: ${FIRST_SUPERUSER_EMAIL:-admin@clinica.com}
+      FIRST_SUPERUSER_PASSWORD: ${FIRST_SUPERUSER_PASSWORD:-Admin@123456}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - clinica_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # ── PostgreSQL 16 ────────────────────────────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    container_name: clinica_db
+    environment:
+      POSTGRES_USER: clinica_user
+      POSTGRES_PASSWORD: clinica_pass
+      POSTGRES_DB: clinica_veterinaria
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U clinica_user -d clinica_veterinaria"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    networks:
+      - clinica_network
+    restart: unless-stopped
+
+  # ── pgAdmin (opcional — só com --profile debug) ───────────────────────────────
+  pgadmin:
+    image: dpage/pgadmin4:8
+    container_name: clinica_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@clinica.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    networks:
+      - clinica_network
+    profiles:
+      - debug
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  clinica_network:
+    driver: bridge

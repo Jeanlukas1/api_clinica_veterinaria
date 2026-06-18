@@ -185,7 +185,7 @@ class MotivoObrigatorioError(ClinicaException):
 class TransferenciaMesmoTutorError(ClinicaException):
     error_code = "TRANSFERENCIA_MESMO_TUTOR"
     default_message = "O tutor destino é o mesmo que o tutor atual do animal."
-    status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
+    status_code = status.HTTP_409_CONFLICT
 
 
 # ─── Exceções de Auth ─────────────────────────────────────────────────────────
