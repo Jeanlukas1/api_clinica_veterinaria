@@ -180,4 +180,18 @@ profile_output/
 # ─── Arquivos de Requisitos gerados ──────────────────────────────────────────
 # Manter requirements.txt no repositório
 # Ignorar apenas arquivos gerados por pip-compile ou poetry export
+# ─── Arquivos de Requisitos gerados ──────────────────────────────────────────
+# Manter requirements.txt no repositório
+# Ignorar apenas arquivos gerados por pip-compile ou poetry export
 requirements-dev.txt.bak
+
+# ─── Documentos Office e Binários ────────────────────────────────────────────
+# Arquivos Word/Excel/PowerPoint não devem estar no repositório de código
+*.docx
+*.doc
+*.xlsx
+*.xls
+*.pptx
+*.ppt
+*.pdf
+
