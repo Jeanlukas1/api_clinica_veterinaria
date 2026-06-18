@@ -1,0 +1,183 @@
+# =============================================================================
+# .gitignore — API REST Clínica Veterinária
+# =============================================================================
+
+# ─── Variáveis de Ambiente (NUNCA versionar!) ─────────────────────────────────
+.env
+.env.local
+.env.*.local
+.env.production
+.env.staging
+
+# ─── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.pdb
+
+# Distribuição / empacotamento
+dist/
+build/
+*.egg-info/
+*.egg
+MANIFEST
+.eggs/
+wheels/
+
+# Instalador
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ─── Ambientes Virtuais ───────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.python-version
+
+# ─── Testes & Cobertura ───────────────────────────────────────────────────────
+.pytest_cache/
+.cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+*.lcov
+nosetests.xml
+test-results/
+junit.xml
+
+# ─── Alembic (manter versions/ no repositório) ────────────────────────────────
+# alembic/versions/*.py  ← NÃO ignorar — faz parte do código
+alembic/__pycache__/
+
+# ─── IDEs e Editores ─────────────────────────────────────────────────────────
+# VS Code
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# JetBrains (PyCharm, etc.)
+.idea/
+*.iml
+*.iws
+
+# Vim / Neovim
+*.swp
+*.swo
+*~
+.netrwhist
+
+# Emacs
+\#*\#
+.\#*
+
+# Sublime Text
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+
+# ─── Sistema Operacional ──────────────────────────────────────────────────────
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ─── Docker ───────────────────────────────────────────────────────────────────
+# Não ignorar Dockerfile nem docker-compose.yml (fazem parte do código)
+# Ignorar apenas overrides locais
+docker-compose.override.yml
+docker-compose.local.yml
+
+# ─── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+*.log.*
+logs/
+log/
+
+# ─── Banco de Dados Local ─────────────────────────────────────────────────────
+*.sqlite
+*.sqlite3
+*.db
+*.db-shm
+*.db-wal
+postgres_data/
+
+# ─── Arquivos Temporários ─────────────────────────────────────────────────────
+*.tmp
+*.temp
+*.bak
+*.backup
+*.swp
+*.orig
+tmp/
+temp/
+
+# ─── Mypy / Type Checking ─────────────────────────────────────────────────────
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pytype/
+
+# ─── Ruff / Linters ──────────────────────────────────────────────────────────
+.ruff_cache/
+
+# ─── Jupyter Notebooks ────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ─── Documentos gerados ───────────────────────────────────────────────────────
+# Manter docs/ no repositório (são arquivos .md editados manualmente)
+# Ignorar apenas artefatos gerados automaticamente
+docs/_build/
+docs/_auto/
+site/
+
+# ─── Chaves e Certificados ───────────────────────────────────────────────────
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+*.jks
+
+# ─── Arquivos de Upload / Media ───────────────────────────────────────────────
+media/
+uploads/
+static/collected/
+
+# ─── Profiling ───────────────────────────────────────────────────────────────
+*.prof
+*.lprof
+profile_output/
+
+# ─── Arquivos de Requisitos gerados ──────────────────────────────────────────
+# Manter requirements.txt no repositório
+# Ignorar apenas arquivos gerados por pip-compile ou poetry export
+requirements-dev.txt.bak
