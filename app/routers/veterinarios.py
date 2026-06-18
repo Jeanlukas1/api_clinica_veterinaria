@@ -106,15 +106,16 @@ async def atualizar_veterinario(
 
 @router.delete(
     "/{veterinario_id}",
-    status_code=status.HTTP_204_NO_CONTENT,
+    status_code=status.HTTP_200_OK,
     summary="Inativar veterinário",
 )
 async def inativar_veterinario(
     veterinario_id: uuid.UUID,
     service: VeterinarioService = Depends(_service),
     current_user: Usuario = Depends(require_perfil(PerfilUsuario.ADMIN)),
-) -> None:
+) -> dict:
     await service.inativar(veterinario_id, usuario=current_user.email)
+    return {"message": "Veterinário inativado com sucesso."}
 
 
 @router.get(

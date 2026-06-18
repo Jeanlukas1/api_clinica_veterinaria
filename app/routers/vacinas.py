@@ -107,7 +107,7 @@ async def atualizar_vacina(
 
 @router.delete(
     "/{vacina_id}",
-    status_code=status.HTTP_204_NO_CONTENT,
+    status_code=status.HTTP_200_OK,
     summary="Remover vacina",
     description="Remove vacina fisicamente. Restrito a ADMIN.",
 )
@@ -115,5 +115,6 @@ async def remover_vacina(
     vacina_id: uuid.UUID,
     service: VacinaService = Depends(_service),
     _: Usuario = Depends(require_perfil(PerfilUsuario.ADMIN)),
-) -> None:
+) -> dict:
     await service.remover(vacina_id)
+    return {"message": "Vacina removida com sucesso."}

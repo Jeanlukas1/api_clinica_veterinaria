@@ -112,7 +112,7 @@ async def atualizar_tutor(
 
 @router.delete(
     "/{tutor_id}",
-    status_code=status.HTTP_204_NO_CONTENT,
+    status_code=status.HTTP_200_OK,
     summary="Inativar tutor",
     description="Soft delete: define ativo=false. Aplica RN-001.",
 )
@@ -120,8 +120,9 @@ async def inativar_tutor(
     tutor_id: uuid.UUID,
     service: TutorService = Depends(_tutor_service),
     current_user: Usuario = Depends(require_perfil(PerfilUsuario.ADMIN)),
-) -> None:
+) -> dict:
     await service.inativar(tutor_id, usuario=current_user.email)
+    return {"message": "Tutor inativado com sucesso."}
 
 
 @router.get(

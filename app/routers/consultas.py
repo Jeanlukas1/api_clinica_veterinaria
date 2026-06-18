@@ -179,7 +179,7 @@ async def mudar_status_consulta(
 
 @router.delete(
     "/{consulta_id}",
-    status_code=status.HTTP_204_NO_CONTENT,
+    status_code=status.HTTP_200_OK,
     summary="Cancelar consulta",
     description=(
         "Cancela a consulta via transição de estado → CANCELADA. "
@@ -193,10 +193,11 @@ async def cancelar_consulta(
     current_user: Usuario = Depends(
         require_perfil(PerfilUsuario.ADMIN, PerfilUsuario.RECEPCIONISTA)
     ),
-) -> None:
+) -> dict:
     from app.models.enums import StatusConsulta
     ip = request.client.host if request.client else None
     data = ConsultaStatusUpdate(status=StatusConsulta.CANCELADA)
     await service.mudar_status(
         consulta_id, data, usuario=current_user.email, ip_address=ip
     )
+    return {"message": "Consulta cancelada com sucesso."}

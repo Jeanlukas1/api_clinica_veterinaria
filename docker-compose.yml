@@ -9,15 +9,9 @@ services:
       target: runtime
     container_name: clinica_api
     ports:
-      - "8001:8000"
-    environment:
-      DATABASE_URL: postgresql+asyncpg://postgres:1907050603@localhost:5432/clinica_veterinaria
-      DATABASE_URL_SYNC: postgresql+psycopg2://postgres:1907050603@localhost:5432/clinica_veterinaria
-      SECRET_KEY: ${SECRET_KEY:-6W+.Zil}D_RIBNx<kjvg:$Qd5tS_M:ySD6:$E#yYkGu0u^{&i5tFwMn|5DX}
-      DEBUG: ${DEBUG:-false}
-      ENVIRONMENT: ${ENVIRONMENT:-production}
-      FIRST_SUPERUSER_EMAIL: ${FIRST_SUPERUSER_EMAIL:-admin@clinica.com}
-      FIRST_SUPERUSER_PASSWORD: ${FIRST_SUPERUSER_PASSWORD:-Admin@123456}
+      - "8000:8000"
+    env_file:
+      - .env
     depends_on:
       db:
         condition: service_healthy
@@ -45,7 +39,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U clinica_user -d clinica_veterinaria"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d clinica_veterinaria"]
       interval: 10s
       timeout: 5s
       retries: 5
